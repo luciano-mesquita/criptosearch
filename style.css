@@ -95,6 +95,14 @@ h1 {
     text-align: center;
 }
 
+.symbol,
+.change1d,
+.change7d {
+    color: #FFF;
+    font-size: 18px;
+    font-weight: bold;
+}
+
 .description {
     color: #777;
     font-size: 16px;
@@ -102,26 +110,29 @@ h1 {
     text-align: justify;
     padding: 30px;
     padding-top: 0px;
-    text-decoration: none;
 }
 
-.titleSymbol,
-.valor {
+.circulatingSupply,
+.maxSupply {
+    color: #FFF;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.titles {
     color: #777;
     font-size: 16px;
     margin-bottom: 5px;
 }
 
-.symbol,
-.change1d,
-.change7d,
 .rank,
 .price,
 .marketCap {
     color: #FFF;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
 }
+
 .sigla .sup {
     font-size: 15px;
     font-weight: normal;
