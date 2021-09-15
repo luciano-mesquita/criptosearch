@@ -1,18 +1,18 @@
-document.querySelector('.busca').addEventListener('submit', async(event)=> {
+document.querySelector('.busca').addEventListener('submit', async (event) => {
     event.preventDefault();
-    
+
     let input = document.querySelector('#searchInput').value;
-    
-    if(input != '') {
+
+    if (input != '') {
         clearInfo();
         showWarning('Carregando...');
-        
+
         let url = `https://api.coingecko.com/api/v3/coins/${encodeURI(input)}`;
-        
+
         let results = await fetch(url);
         let json = await results.json();
 
-        if(url) {
+        if (json) {
             showInfo({
                 name: json.name,
                 symbol: json.symbol,
@@ -38,18 +38,36 @@ function showInfo(json) {
     showWarning('');
 
     document.querySelector('.result').style.display = 'block';
-    document.querySelector('.name').innerHTML = `-- ${json.name} --`;
+    document.querySelector('.name').innerHTML = `-- ${json.name.toUpperCase()} --`;
     document.querySelector('.result img').setAttribute('src', `${json.icon}`);
     document.querySelector('.symbol').innerHTML = `${json.symbol.toUpperCase()}`;
-    document.querySelector('.price').innerHTML = `${json.price.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}`;
-    document.querySelector('.marketCap').innerHTML = `${json.market_cap.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}`;
+    document.querySelector('.price').innerHTML = `${json.price.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}`;
+    document.querySelector('.marketCap').innerHTML = `${json.market_cap.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}`;
     document.querySelector('.rank').innerHTML = `${json.rank}`;
-    document.querySelector('.change1d').innerHTML = `${formatVariation(json.change_1d)}`;
-    document.querySelector('.change7d').innerHTML = `${formatVariation(json.change_7d)}`;
-    document.querySelector('.change1y').innerHTML = `${formatVariation(json.change_1y)}`;
+    document.querySelector('.change1d').innerHTML = `${addIndicator(json.change_1d)}`;
+    document.querySelector('.change7d').innerHTML = `${addIndicator(json.change_7d)}`;
+    document.querySelector('.change1y').innerHTML = `${addIndicator(json.change_1y)}`;
     document.querySelector('.maxSupply').innerHTML = `${showSupply(json.max_supply)}`;
     document.querySelector('.circulatingSupply').innerHTML = `${json.circulating_supply}`;
-    document.querySelector('.description').innerHTML = `${json.description}`;
+    document.querySelector('.description').innerHTML = `${linkRemove(json.description)}`;
+
+    setColor(json.change_1d, '#val1');
+    setColor(json.change_7d, '#val2');
+    setColor(json.change_1y, '#val3');
+}
+
+function linkRemove(data) {
+    let replace = data.replace(/<a\b[^>]*>/gm, '').replace(/<\/a>/gm, '');
+    console.log(replace);
+    return replace;
+}
+
+function setColor(data, id) {
+    if (data > 0) {
+        document.querySelector(id).style.color = 'chartreuse';
+    } else {
+        document.querySelector(id).style.color = 'red';
+    }
 }
 
 function clearInfo() {
@@ -62,7 +80,7 @@ function showWarning(msg) {
 }
 
 function showSupply(data) {
-    if(data == null) {
+    if (data == null) {
         data = 'Emissão Ilimitada';
         return data;
     } else {
@@ -70,10 +88,9 @@ function showSupply(data) {
     }
 }
 
-function formatVariation(data) {
-    if(data > 0) {
-        let mount = `+${data.toFixed(2)}%`;
-        return mount;
+function addIndicator(data) {
+    if (data > 0) {
+        return `+${data.toFixed(2)}%`;
     } else {
         return `${data.toFixed(2)}%`;
     }
