@@ -97,7 +97,8 @@ h1 {
 
 .symbol,
 .change1d,
-.change7d {
+.change7d,
+.change1y {
     color: #FFF;
     font-size: 18px;
     font-weight: bold;

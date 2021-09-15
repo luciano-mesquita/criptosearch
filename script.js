@@ -23,6 +23,7 @@ document.querySelector('.busca').addEventListener('submit', async(event)=> {
                 rank: json.coingecko_rank,
                 change_1d: json.market_data.price_change_percentage_24h,
                 change_7d: json.market_data.price_change_percentage_7d,
+                change_1y: json.market_data.price_change_percentage_1y,
                 max_supply: json.market_data.max_supply,
                 circulating_supply: json.market_data.circulating_supply,
             })
@@ -45,6 +46,7 @@ function showInfo(json) {
     document.querySelector('.rank').innerHTML = `${json.rank}`;
     document.querySelector('.change1d').innerHTML = `${formatVariation(json.change_1d)}`;
     document.querySelector('.change7d').innerHTML = `${formatVariation(json.change_7d)}`;
+    document.querySelector('.change1y').innerHTML = `${formatVariation(json.change_1y)}`;
     document.querySelector('.maxSupply').innerHTML = `${showSupply(json.max_supply)}`;
     document.querySelector('.circulatingSupply').innerHTML = `${json.circulating_supply}`;
     document.querySelector('.description').innerHTML = `${json.description}`;
